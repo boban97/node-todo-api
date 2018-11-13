@@ -19,7 +19,14 @@ app.post('/todos', (req, res) => {
         text: req.body.text
     });
     
-    todo.save().then((doc) => res.status(200).send(doc)).catch(error => res.status(400).send(error));
+    todo.save().then(todo => res.status(200).send(todo))
+        .catch(error => res.status(400).send(error));
+});
+
+// Get all todos
+app.get('/todos', (req, res) => {
+   Todo.find().then(todos => res.status(200).send({todos}))
+        .catch(error => res.status(400).send({error}));
 });
 
 app.listen(process.env.PORT, () => console.log(`The server has been started on the port: ${process.env.PORT}`));
